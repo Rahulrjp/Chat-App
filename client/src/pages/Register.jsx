@@ -57,8 +57,8 @@ const Registration = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-8">
-            <div className="max-w-md w-full bg-white rounded-lg shadow-md border border-slate-200 p-6 sm:p-8 transition-all duration-300">
+        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-2.5 xs:p-4 sm:p-8">
+            <div className="max-w-md w-full bg-white rounded-lg shadow-md border border-slate-200 p-4 xs:p-6 sm:p-8 transition-all duration-300">
                 <div className="animate-in fade-in duration-300">
                     <h2 className="text-2xl font-bold text-slate-900 mb-6 text-center">Create an account</h2>
                     <form onSubmit={handleSubmit} className="space-y-4">
@@ -80,7 +80,7 @@ const Registration = () => {
                             </div>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">Phone Number</label>
+                            <label className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <Mail className="h-4 w-4 text-slate-400" />

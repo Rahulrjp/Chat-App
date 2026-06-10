@@ -35,8 +35,8 @@ function VerifyEmail() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="w-full max-w-md bg-white shadow-md rounded-2xl p-6 text-center">
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-2.5 xs:p-4">
+            <div className="w-full max-w-md bg-white shadow-md rounded-2xl p-4 xs:p-6 text-center">
                 <div
                     className="flex gap-2 justify-end items-center text-sm text-gray-400 cursor-pointer hover:text-gray-600 transition"
                     onClick={handleSkip}>

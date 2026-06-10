@@ -10,7 +10,7 @@ const SocialLogins = ({ onLogin }) => {
                 </div>
             </div>
             <button
-                // onClick={onLogin}
+                onClick={() => alert('Login with Google is currently disabled')}
                 className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-white border border-slate-300 rounded-md shadow-sm hover:bg-slate-50 transition-colors text-sm font-medium text-slate-700">
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
                     <path

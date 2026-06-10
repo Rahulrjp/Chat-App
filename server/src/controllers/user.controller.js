@@ -56,7 +56,6 @@ export const getConversations = async (req, res) => {
         const conversations = await ConversationModel.find({ members: { $in: [_id] } })
             .populate("members", "name email avatar status lastseen")
             .sort({ updatedAt: -1 });
-        console.log("Conversations : ", conversations);
         res.status(200).json({ conversations });
     } catch (error) {
         console.error(error.message);

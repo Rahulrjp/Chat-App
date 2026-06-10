@@ -42,7 +42,7 @@ export const loginUser = async (req, res) => {
     }
     const accessToken = await authenticateUser(req, res, user);
     req.user = user;
-    console.log("Login controller req.user : ", req.user);
+    console.log("Running : ", accessToken);
     return res.status(200).json({ message: "Logged in successfully", user, accessToken })
 }
 
@@ -110,7 +110,7 @@ export const authenticateUser = async (req, res, user) => {
         sessionId: session?.sessionId
     })
 
-    const baseConfig = { httpOnly: true, secure: true, sameSite: "None" }
+    const baseConfig = { httpOnly: true, secure: false, sameSite: "None" } // secure is false for local development, must be true in production
 
     res.cookie('access_token', accessToken, {
         ...baseConfig,

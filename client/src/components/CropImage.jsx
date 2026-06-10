@@ -56,7 +56,7 @@ const CropImage = ({ cropImageSrc, onClose, onSave }) => {
     };
 
     return (
-        <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-90 flex items-center justify-center p-4 animate-in fade-in duration-200">
+        <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-90 flex items-center justify-center p-2.5 xs:p-4 animate-in fade-in duration-200">
             <div className="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 border border-transparent dark:border-slate-800">
                 <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
                     <h3 className="font-bold text-slate-800 dark:text-white">Crop Profile Picture</h3>
@@ -66,8 +66,8 @@ const CropImage = ({ cropImageSrc, onClose, onSave }) => {
                         <X className="w-4 h-4" />
                     </button>
                 </div>
-                <div className="p-6 flex flex-col">
-                    <div className="relative w-full h-80 bg-slate-950 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700">
+                <div className="p-4 xs:p-6 flex flex-col">
+                    <div className="relative w-full h-60 xs:h-72 sm:h-80 bg-slate-950 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700">
                         <Cropper
                             image={cropImageSrc}
                             crop={crop}
@@ -80,7 +80,7 @@ const CropImage = ({ cropImageSrc, onClose, onSave }) => {
                             onZoomChange={setZoom}
                         />
                     </div>
-                    <div className="w-full mt-6 flex items-center gap-3">
+                    <div className="w-full mt-4 xs:mt-6 flex items-center gap-3">
                         <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
                             <ImageIcon className="w-4 h-4" />
                         </span>
@@ -97,7 +97,7 @@ const CropImage = ({ cropImageSrc, onClose, onSave }) => {
                             <ImageIcon className="w-5 h-5" />
                         </span>
                     </div>
-                    <div className="w-full flex gap-3 mt-6">
+                    <div className="w-full flex gap-3 mt-4 xs:mt-6">
                         <button
                             onClick={onClose}
                             disabled={isApplying}

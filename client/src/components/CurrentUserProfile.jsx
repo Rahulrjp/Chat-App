@@ -22,14 +22,14 @@ const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCrop
     };
 
     return (
-        <div className="fixed inset-0 bg-slate-900/40 dark:bg-slate-900/80 backdrop-blur-sm z-70 flex items-center justify-center p-4 transition-all">
+        <div className="fixed inset-0 bg-slate-900/40 dark:bg-slate-900/80 backdrop-blur-sm z-70 flex items-center justify-center p-2.5 xs:p-4 transition-all">
             <div className="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col border border-transparent dark:border-slate-800">
                 <div className="h-32 bg-linear-to-r from-indigo-500 to-purple-600 relative shrink-0">
                     <button onClick={onClose} className="absolute top-4 right-4 text-white hover:bg-white/20 p-1.5 rounded-full transition-colors">
                         <X className="w-5 h-5" />
                     </button>
                 </div>
-                <div className="flex-1 overflow-y-auto pb-6">
+                <div className="flex-1 overflow-y-auto pb-4 xs:pb-6">
                     <div className="relative mt-16 flex justify-center">
                         <div className="relative cursor-pointer group">
                             {currentUser?.avatar?.url ? (
@@ -78,14 +78,14 @@ const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCrop
                             <input type="file" ref={fileInputRef} onChange={handleAvatarChange} accept="image/*" className="hidden" />
                         </div>
                     </div>
-                    <div className="px-6 pt-4 text-center">
-                        <h2 className="text-2xl font-bold">{currentUser?.name}</h2>
+                    <div className="px-4 xs:px-6 pt-4 text-center">
+                        <h2 className="text-xl xs:text-2xl font-bold">{currentUser?.name}</h2>
                         <p className="text-green-500 font-medium text-sm mt-1 mb-6 flex items-center justify-center gap-1.5">
                             <span className="w-2 h-2 rounded-full bg-green-500"></span>
                             {currentUser?.status}
                         </p>
                         <div className="space-y-4 text-left">
-                            <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700/50">
+                            <div className="bg-slate-50 dark:bg-slate-800/50 p-3 xs:p-4 rounded-xl border border-slate-100 dark:border-slate-700/50">
                                 <div className="flex justify-between items-center mb-2">
                                     <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">About</label>
                                     {!isEditingAbout && (
@@ -128,7 +128,7 @@ const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCrop
                                     <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">{currentUser?.about}</p>
                                 )}
                             </div>
-                            <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700/50 space-y-4">
+                            <div className="bg-slate-50 dark:bg-slate-800/50 p-3 xs:p-4 rounded-xl border border-slate-100 dark:border-slate-700/50 space-y-4">
                                 <div>
                                     <label className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
                                         <Mail className="w-3.5 h-3.5" /> Email Address
@@ -141,7 +141,7 @@ const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCrop
                                     </label>
                                     <p className="text-sm text-slate-700 dark:text-slate-300">{currentUser?.phoneNumber}</p>
                                 </div>
-                                <div className="pt-3 border-t border-slate-200 dark:border-slate-700 flex gap-6">
+                                <div className="pt-3 border-t border-slate-200 dark:border-slate-700 flex flex-col gap-3 xs:flex-row xs:gap-6">
                                     <div className="flex-1">
                                         <label className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
                                             <MapPin className="w-3.5 h-3.5" /> Location

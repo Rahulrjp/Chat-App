@@ -20,10 +20,10 @@ const Sidebar = ({
             className={`${activeContactId ? "hidden md:flex" : "flex"} flex-col w-full md:w-80 lg:w-96 bg-slate-50 dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-10 transition-colors duration-200`}>
             <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center transition-colors duration-200">
                 <div
-                    className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
+                    className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity min-w-0"
                     onClick={onShowProfile}
                     title="View Profile">
-                    <div className="relative">
+                    <div className="relative shrink-0">
                         {currentUser?.avatar?.url ? (
                             <img src={currentUser.avatar.url} alt="Profile" className="w-10 h-10 rounded-full object-cover" />
                         ) : (
@@ -34,9 +34,9 @@ const Sidebar = ({
                         <div
                             className={`absolute bottom-0 right-0 w-3 h-3 ${appSettings.onlineStatus ? "bg-green-500" : "bg-slate-400 dark:bg-slate-500"} rounded-full border-2 border-white dark:border-slate-900 transition-colors duration-200`}></div>
                     </div>
-                    <div>
-                        <h2 className="text-sm font-semibold">{currentUser?.name}</h2>
-                        <p className="text-xs text-slate-500 dark:text-slate-400">{appSettings.onlineStatus ? "Online" : "Invisible"}</p>
+                    <div className="min-w-0">
+                        <h2 className="text-sm font-semibold truncate">{currentUser?.name}</h2>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{appSettings.onlineStatus ? "Online" : "Invisible"}</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-1">
