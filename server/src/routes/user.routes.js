@@ -6,7 +6,7 @@ import { uploadMiddleware } from '../middleware/multer.middleware.js';
 const router = Router();
 
 router.route('/conversations').get(verifyAuthentication, getConversations);
-router.route('/search').get(searchUser);
+router.route('/search').get(verifyAuthentication, searchUser);
 router.route('/conversations').post(verifyAuthentication, createConversation);
 router.route('/').get(verifyAuthentication, getUser);
 router.route('/password').patch(changePassword);

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useEffectEvent, useState } from "react";
 import { getCurrentUser } from "../services/user.services";
 import socket from "../config/socket.io";

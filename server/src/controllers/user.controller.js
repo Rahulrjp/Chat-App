@@ -66,22 +66,50 @@ export const getConversations = async (req, res) => {
 
 export const searchUser = async (req, res) => {
     const { query } = req.query;
-    console.log("Query : ", query);
+    if (!req.user) {
+        return res.status(401).json({ message: "User not authenticated" });
+    }
 
-    const isEmail = query.includes("@");
-    console.log("Is Email : ", isEmail);
+    const currentUserId = req.user._id;
+
     try {
-        const user = isEmail
-            ? [await getUserByEmail(query)]
-            : await UserModel.find({
+        // Find all conversations where the current user is a member
+        const conversations = await ConversationModel.find({ members: currentUserId });
+
+        // Collect all user IDs that the current user is already chatting with, plus current user ID
+        const excludedUserIds = [currentUserId.toString()];
+        conversations.forEach(conv => {
+            conv.members.forEach(memberId => {
+                if (memberId) {
+                    const idStr = memberId.toString();
+                    if (!excludedUserIds.includes(idStr)) {
+                        excludedUserIds.push(idStr);
+                    }
+                }
+            });
+        });
+
+        const isEmail = query.includes("@");
+        let users = [];
+
+        if (isEmail) {
+            const foundUser = await getUserByEmail(query);
+            if (foundUser && !excludedUserIds.includes(foundUser._id.toString())) {
+                const userObj = foundUser.toObject();
+                delete userObj.password;
+                users = [userObj];
+            }
+        } else {
+            users = await UserModel.find({
+                _id: { $nin: excludedUserIds },
                 $or: [
                     { name: { $regex: query, $options: "i" } },
                     { email: { $regex: query, $options: "i" } }
                 ]
             }).select("-password");
+        }
 
-        console.log("User : ", user);
-        return res.status(200).json({ message: "user found", user });
+        return res.status(200).json({ message: "user found", user: users });
     } catch (error) {
         return res.status(400).json({ message: 'No user found' });
     }

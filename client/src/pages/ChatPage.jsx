@@ -312,6 +312,7 @@ const ChatPage = () => {
     // Sync current user state with auth context user
     useEffect(() => {
         if (user) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setCurrentUser(user);
         }
     }, [user]);

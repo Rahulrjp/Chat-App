@@ -17,6 +17,10 @@ const AuthPage = ({ onLogin }) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
+
     const handleToggleLogin = () => {
         setIsLogin(!isLogin);
         setOtpStep(false);
