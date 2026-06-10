@@ -1,4 +1,4 @@
-import { Calendar, Mail, MapPin, MessageSquare, Phone, X } from "lucide-react";
+import { Calendar, Mail, MapPin, MessageSquare, Phone, X, User } from "lucide-react";
 
 const PublicProfile = ({ profile, onClose, onViewAvatar, onStartChat }) => {
     if (!profile) return null;
@@ -12,12 +12,20 @@ const PublicProfile = ({ profile, onClose, onViewAvatar, onStartChat }) => {
                 </div>
                 <div className="flex-1 overflow-y-auto pb-6">
                     <div className="relative -mt-16 flex justify-center">
-                        <div className="relative cursor-pointer hover:opacity-90 transition-opacity" onClick={() => onViewAvatar(profile.avatar)}>
-                            <img
-                                src={profile.avatar}
-                                alt={profile.name}
-                                className="w-32 h-32 rounded-full border-4 border-white dark:border-slate-900 object-cover bg-white dark:bg-slate-800 shadow-md"
-                            />
+                        <div className="relative">
+                            {profile.avatar ? (
+                                <div className="cursor-pointer hover:opacity-90 transition-opacity" onClick={() => onViewAvatar(profile.avatar)}>
+                                    <img
+                                        src={profile.avatar}
+                                        alt={profile.name}
+                                        className="w-32 h-32 rounded-full border-4 border-white dark:border-slate-900 object-cover bg-white dark:bg-slate-800 shadow-md"
+                                    />
+                                </div>
+                            ) : (
+                                <div className="w-32 h-32 rounded-full border-4 border-white dark:border-slate-900 bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-400 dark:text-slate-500 shadow-md">
+                                    <User className="w-16 h-16" />
+                                </div>
+                            )}
                         </div>
                     </div>
                     <div className="px-6 pt-4 text-center">

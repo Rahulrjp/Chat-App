@@ -1,4 +1,4 @@
-import { ArrowLeft, Check, CheckCheck, MoreVertical, Paperclip, Reply, Send, Smile, Trash2, X, Play, Clock, AlertCircle } from "lucide-react";
+import { ArrowLeft, Check, CheckCheck, MoreVertical, Paperclip, Reply, Send, Smile, Trash2, X, Play, Clock, AlertCircle, User } from "lucide-react";
 import { COMMON_EMOJIS } from "../data/mock";
 import { useEffect, useRef, useState } from "react";
 
@@ -79,7 +79,13 @@ const ChatArea = ({
                         onClick={onViewProfile}
                         title="View Profile">
                         <div className="relative mr-3">
-                            <img src={activeContact.avatar} alt={activeContact.name} className="w-10 h-10 rounded-full object-cover" />
+                            {activeContact.avatar ? (
+                                <img src={activeContact.avatar} alt={activeContact.name} className="w-10 h-10 rounded-full object-cover" />
+                            ) : (
+                                <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400">
+                                    <User className="w-6 h-6" />
+                                </div>
+                            )}
                             {activeContact.online && (
                                 <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-slate-900"></div>
                             )}
@@ -164,7 +170,15 @@ const ChatArea = ({
                                 )}
                                 {!isMe && (
                                     <div className="w-8 h-8 shrink-0">
-                                        {showAvatar && <img src={activeContact.avatar} alt="" className="w-8 h-8 rounded-full object-cover" />}
+                                        {showAvatar && (
+                                            activeContact.avatar ? (
+                                                <img src={activeContact.avatar} alt="" className="w-8 h-8 rounded-full object-cover" />
+                                            ) : (
+                                                <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400">
+                                                    <User className="w-5 h-5" />
+                                                </div>
+                                            )
+                                        )}
                                     </div>
                                 )}
 

@@ -2,6 +2,7 @@ import ConversationModel from "../models/conversation.model.js";
 import UserModel from "../models/user.model.js";
 import { hashPassword, verifyPassword } from "../services/auth.services.js";
 import { getUserByEmail, getUserById } from "../services/user.services.js";
+import { uploadToCloudinary, deleteFromCloudinary } from "../utils/cloudinary.js";
 
 export const getUser = async (req, res) => {
 
@@ -104,3 +105,81 @@ export const createConversation = async (req, res) => {
         return res.status(500).json({ message: 'chat adding failed' })
     }
 }
+
+export const updateAvatar = async (req, res) => {
+    const user = req.user;
+    if (!user) {
+        return res.status(401).json({ message: "User not authenticated" });
+    }
+
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: "No file uploaded" });
+        }
+
+        const currentUser = await UserModel.findById(user._id);
+        if (!currentUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const uploadResult = await uploadToCloudinary(req.file.buffer, "avatars");
+
+        if (currentUser.avatar && currentUser.avatar.publicId) {
+            try {
+                await deleteFromCloudinary(currentUser.avatar.publicId, currentUser.avatar.url);
+            } catch (err) {
+                console.error("Failed to delete old avatar from Cloudinary:", err);
+            }
+        }
+
+        currentUser.avatar = {
+            url: uploadResult.url,
+            publicId: uploadResult.publicId
+        };
+        await currentUser.save();
+
+        return res.status(200).json({
+            message: "Avatar updated successfully",
+            avatar: currentUser.avatar
+        });
+    } catch (error) {
+        console.error("Update avatar error:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const deleteAvatar = async (req, res) => {
+    const user = req.user;
+    if (!user) {
+        return res.status(401).json({ message: "User not authenticated" });
+    }
+
+    try {
+        const currentUser = await UserModel.findById(user._id);
+        if (!currentUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        if (currentUser.avatar && currentUser.avatar.publicId) {
+            try {
+                await deleteFromCloudinary(currentUser.avatar.publicId, currentUser.avatar.url);
+            } catch (err) {
+                console.error("Failed to delete avatar from Cloudinary:", err);
+            }
+        }
+
+        currentUser.avatar = {
+            url: "",
+            publicId: ""
+        };
+        await currentUser.save();
+
+        return res.status(200).json({
+            message: "Avatar deleted successfully",
+            avatar: currentUser.avatar
+        });
+    } catch (error) {
+        console.error("Delete avatar error:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};

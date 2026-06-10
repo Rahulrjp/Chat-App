@@ -16,7 +16,20 @@ export const createConversation = async (data) => {
 }
 
 export const searchUser = async (query) => {
-    console.log("Searching....", query);
     const res = await api.get(`/user/search?query=${query}`);
     return res.data;
 }
+
+export const updateAvatarService = async (formData) => {
+    const res = await api.patch('/user/avatar', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+    return res.data;
+};
+
+export const deleteAvatarService = async () => {
+    const res = await api.delete('/user/avatar');
+    return res.data;
+};

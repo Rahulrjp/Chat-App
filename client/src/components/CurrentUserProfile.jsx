@@ -1,7 +1,7 @@
-import { Calendar, Camera, Check, Edit2, Mail, MapPin, Phone, X } from "lucide-react";
+import { Calendar, Camera, Check, Edit2, Mail, MapPin, Phone, X, User, Trash2 } from "lucide-react";
 import { useRef, useState } from "react";
 
-const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCropImageSrc, onViewAvatar }) => {
+const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCropImageSrc, onViewAvatar, onDeleteAvatar }) => {
     const [isEditingAbout, setIsEditingAbout] = useState(false);
     const [aboutInput, setAboutInput] = useState(currentUser?.about);
     const fileInputRef = useRef(null);
@@ -31,12 +31,29 @@ const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCrop
                 <div className="flex-1 overflow-y-auto pb-6">
                     <div className="relative mt-16 flex justify-center">
                         <div className="relative cursor-pointer group">
-                            <img
-                                src={currentUser?.avatar}
-                                alt={currentUser?.name}
-                                onClick={() => onViewAvatar(currentUser?.avatar)}
-                                className="w-32 h-32 rounded-full border-4 border-white dark:border-slate-900 object-cover bg-white dark:bg-slate-800 shadow-md group-hover:opacity-90 transition-opacity"
-                            />
+                            {currentUser?.avatar?.url ? (
+                                <>
+                                    <img
+                                        src={currentUser.avatar.url}
+                                        alt={currentUser?.name}
+                                        onClick={() => onViewAvatar(currentUser.avatar.url)}
+                                        className="w-32 h-32 rounded-full border-4 border-white dark:border-slate-900 object-cover bg-white dark:bg-slate-800 shadow-md group-hover:opacity-90 transition-opacity"
+                                    />
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onDeleteAvatar();
+                                        }}
+                                        className="absolute bottom-1 left-1 bg-red-600 p-2 rounded-full text-white hover:bg-red-700 border-2 border-white dark:border-slate-900 shadow-sm transition-colors cursor-pointer z-10"
+                                        title="Delete Avatar">
+                                        <Trash2 className="w-4 h-4" />
+                                    </button>
+                                </>
+                            ) : (
+                                <div className="w-32 h-32 rounded-full border-4 border-white dark:border-slate-900 bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-400 dark:text-slate-500 shadow-md">
+                                    <User className="w-16 h-16" />
+                                </div>
+                            )}
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();

@@ -13,7 +13,7 @@ import socket from "../config/socket.io";
 import { useAuth } from "../context/AuthContext";
 import CropImage from "../components/CropImage";
 import SettingsView from "../components/Settings";
-import { getConversations } from "../services/user.services";
+import { getConversations, updateAvatarService, deleteAvatarService } from "../services/user.services";
 import { getMessages, uploadAttachmentService, deleteMessageService, deleteMultipleMessagesService, clearChatService } from "../services/chat.services";
 
 const ChatPage = () => {
@@ -271,12 +271,10 @@ const ChatPage = () => {
     };
 
     const handleCreateNewChat = (name, email, id) => {
-        const newId = Date.now();
-
         const newContact = {
             id,
             name,
-            avatar: `https://i.pravatar.cc/150?u=${newId}`,
+            avatar: "",
             lastMessage: "",
             time: "Just now",
             unread: 0,
@@ -328,7 +326,7 @@ const ChatPage = () => {
                         id: otherMember._id || conv._id,
                         conversationId: conv._id,
                         name: otherMember.name || "Unknown User",
-                        avatar: otherMember.avatar?.url || `https://i.pravatar.cc/150?u=${otherMember._id || conv._id}`,
+                        avatar: otherMember.avatar?.url || "",
                         lastMessage: conv.lastMessage?.message || "",
                         time: conv.updatedAt ? new Date(conv.updatedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "Just now",
                         unread: 0,
@@ -512,6 +510,46 @@ const ChatPage = () => {
         };
     }, [user]);
 
+    const base64ToBlob = (base64, mimeType = "image/jpeg") => {
+        const byteString = atob(base64.split(",")[1]);
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([ab], { type: mimeType });
+    };
+
+    const handleUpdateAvatar = async (croppedBase64) => {
+        try {
+            const blob = base64ToBlob(croppedBase64, "image/jpeg");
+            const file = new File([blob], "avatar.jpg", { type: "image/jpeg" });
+            const formData = new FormData();
+            formData.append("avatar", file);
+
+            const result = await updateAvatarService(formData);
+            
+            // Update local state
+            setCurrentUser((prev) => ({ ...prev, avatar: result.avatar }));
+            await getUser();
+            setCropImageSrc(null);
+        } catch (error) {
+            console.error("Failed to update avatar:", error);
+            alert("Failed to upload avatar. Please try again.");
+        }
+    };
+
+    const handleDeleteAvatar = async () => {
+        try {
+            const result = await deleteAvatarService();
+            setCurrentUser((prev) => ({ ...prev, avatar: result.avatar }));
+            await getUser();
+        } catch (error) {
+            console.error("Failed to delete avatar:", error);
+            alert("Failed to delete avatar. Please try again.");
+        }
+    };
+
     return (
         <div className={appSettings.darkMode ? "dark" : ""}>
             <div className="flex h-screen bg-slate-100 dark:bg-slate-950 font-sans overflow-hidden text-slate-900 dark:text-slate-100 transition-colors duration-200">
@@ -555,6 +593,7 @@ const ChatPage = () => {
                     onSaveAbout={(about) => setCurrentUser((prev) => ({ ...prev, about }))}
                     onSetCropImageSrc={setCropImageSrc}
                     onViewAvatar={setViewedAvatar}
+                    onDeleteAvatar={handleDeleteAvatar}
                 />
 
                 <PublicProfile
@@ -593,10 +632,7 @@ const ChatPage = () => {
                 <CropImage
                     cropImageSrc={cropImageSrc}
                     onClose={() => setCropImageSrc(null)}
-                    onSave={(url) => {
-                        setCurrentUser((prev) => ({ ...prev, avatar: url }));
-                        setCropImageSrc(null);
-                    }}
+                    onSave={handleUpdateAvatar}
                 />
             </div>
         </div>

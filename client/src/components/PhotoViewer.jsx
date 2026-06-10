@@ -120,7 +120,7 @@ const PhotoViewer = ({ photoUrl, onClose }) => {
     const [imageScale, setImageScale] = useState(1);
     if (!photoUrl) return null;
 
-    const isVideo = photoUrl.includes("/video/upload/") || /\.(mp4|webm|ogg|mov|avi)$/i.test(photoUrl);
+    const isVideo = typeof photoUrl === "string" && (photoUrl.includes("/video/upload/") || /\.(mp4|webm|ogg|mov|avi)$/i.test(photoUrl));
 
     return (
         <div className="fixed inset-0 bg-black/95 z-100 flex items-center justify-center p-4 sm:p-8 animate-in fade-in duration-200 overflow-hidden">

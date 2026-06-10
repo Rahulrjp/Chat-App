@@ -1,4 +1,4 @@
-import { Search, Settings, UserPlus } from "lucide-react";
+import { Search, Settings, UserPlus, User } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const Sidebar = ({
@@ -24,7 +24,13 @@ const Sidebar = ({
                     onClick={onShowProfile}
                     title="View Profile">
                     <div className="relative">
-                        <img src={currentUser?.avatar} alt="Profile" className="w-10 h-10 rounded-full object-cover" />
+                        {currentUser?.avatar?.url ? (
+                            <img src={currentUser.avatar.url} alt="Profile" className="w-10 h-10 rounded-full object-cover" />
+                        ) : (
+                            <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400">
+                                <User className="w-6 h-6" />
+                            </div>
+                        )}
                         <div
                             className={`absolute bottom-0 right-0 w-3 h-3 ${appSettings.onlineStatus ? "bg-green-500" : "bg-slate-400 dark:bg-slate-500"} rounded-full border-2 border-white dark:border-slate-900 transition-colors duration-200`}></div>
                     </div>
@@ -71,7 +77,13 @@ const Sidebar = ({
                         <div
                             className="relative z-20 cursor-pointer hover:opacity-80 transition-opacity"
                             onClick={(e) => onAvatarClick(e, contact)}>
-                            <img src={contact.avatar} alt={contact.name} className="w-12 h-12 rounded-full object-cover" />
+                            {contact.avatar ? (
+                                <img src={contact.avatar} alt={contact.name} className="w-12 h-12 rounded-full object-cover" />
+                            ) : (
+                                <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400">
+                                    <User className="w-7 h-7" />
+                                </div>
+                            )}
                             {contact.online && (
                                 <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white dark:border-slate-900"></div>
                             )}
