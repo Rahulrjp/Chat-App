@@ -271,6 +271,8 @@ const ChatPage = () => {
     };
 
     const handleCreateNewChat = (name, email, id) => {
+        const newId = Date.now();
+
         const newContact = {
             id,
             name,
@@ -528,7 +530,7 @@ const ChatPage = () => {
             formData.append("avatar", file);
 
             const result = await updateAvatarService(formData);
-            
+
             // Update local state
             setCurrentUser((prev) => ({ ...prev, avatar: result.avatar }));
             await getUser();

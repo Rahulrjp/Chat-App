@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCropImageSrc, onViewAvatar, onDeleteAvatar }) => {
     const [isEditingAbout, setIsEditingAbout] = useState(false);
     const [aboutInput, setAboutInput] = useState(currentUser?.about);
+    const [isDeleting, setIsDeleting] = useState(false);
     const fileInputRef = useRef(null);
 
     if (!show) return null;
@@ -40,13 +41,25 @@ const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCrop
                                         className="w-32 h-32 rounded-full border-4 border-white dark:border-slate-900 object-cover bg-white dark:bg-slate-800 shadow-md group-hover:opacity-90 transition-opacity"
                                     />
                                     <button
-                                        onClick={(e) => {
+                                        onClick={async (e) => {
                                             e.stopPropagation();
-                                            onDeleteAvatar();
+                                            try {
+                                                setIsDeleting(true);
+                                                await onDeleteAvatar();
+                                            } catch (err) {
+                                                console.error("Deletion error:", err);
+                                            } finally {
+                                                setIsDeleting(false);
+                                            }
                                         }}
-                                        className="absolute bottom-1 left-1 bg-red-600 p-2 rounded-full text-white hover:bg-red-700 border-2 border-white dark:border-slate-900 shadow-sm transition-colors cursor-pointer z-10"
+                                        disabled={isDeleting}
+                                        className="absolute bottom-1 left-1 bg-red-600 p-2 rounded-full text-white hover:bg-red-700 border-2 border-white dark:border-slate-900 shadow-sm transition-colors cursor-pointer z-10 disabled:opacity-50 flex items-center justify-center min-w-8 min-h-8"
                                         title="Delete Avatar">
-                                        <Trash2 className="w-4 h-4" />
+                                        {isDeleting ? (
+                                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                        ) : (
+                                            <Trash2 className="w-4 h-4" />
+                                        )}
                                     </button>
                                 </>
                             ) : (
