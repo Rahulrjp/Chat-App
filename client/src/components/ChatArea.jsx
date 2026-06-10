@@ -481,7 +481,7 @@ const ChatArea = ({
                                 <button
                                     type="button"
                                     onClick={() => mediaInputRef.current?.click()}
-                                    className="p-2 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors hidden sm:block">
+                                    className="p-2 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
                                     <Paperclip className="w-5 h-5" />
                                 </button>
                                 <input type="file" ref={mediaInputRef} onChange={handleMediaChange} accept="image/*,video/*" multiple className="hidden" />
@@ -501,7 +501,7 @@ const ChatArea = ({
                                     <Smile className="w-5 h-5" />
                                 </button>
                                 {showEmojiPicker && (
-                                    <div className="absolute bottom-full right-0 mb-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl p-3 w-72 z-50 animate-in slide-in-from-bottom-2 duration-200">
+                                    <div className="absolute bottom-full right-0 mb-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl p-3 w-72 max-w-[calc(100vw-2rem)] z-50 animate-in slide-in-from-bottom-2 duration-200">
                                         <div className="flex justify-between items-center mb-2">
                                             <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Emojis</span>
                                             <button

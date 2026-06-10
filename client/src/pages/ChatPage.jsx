@@ -586,7 +586,9 @@ const ChatPage = () => {
                         onCloseChat={() => setActiveContactId(null)}
                     />
                 ) : (
-                    <EmptyState />
+                    <div className="hidden md:flex flex-1">
+                        <EmptyState />
+                    </div>
                 )}
 
                 <CurrentUserProfile
