@@ -29,7 +29,7 @@ const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCrop
                         <X className="w-5 h-5" />
                     </button>
                 </div>
-                <div className="flex-1 overflow-y-auto pb-4 xs:pb-6">
+                <div className="flex-1 overflow-y-auto no-scrollbar pb-4 xs:pb-6">
                     <div className="relative mt-16 flex justify-center">
                         <div className="relative cursor-pointer group">
                             {currentUser?.avatar?.url ? (

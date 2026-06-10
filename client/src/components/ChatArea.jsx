@@ -327,7 +327,7 @@ const ChatArea = ({
                                                 }
                                             })()
                                         )}
-                                        {msg.text && <p className="text-[15px] leading-relaxed break-words whitespace-pre-wrap">{msg.text}</p>}
+                                        {msg.text && <p className="text-[15px] leading-relaxed wrap-break-word whitespace-pre-wrap">{msg.text}</p>}
                                     </div>
                                     <div className="flex items-center mt-1 space-x-1">
                                         <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">{msg.time}</span>

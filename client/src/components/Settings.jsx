@@ -36,7 +36,7 @@ const SettingsView = ({ show, onClose, appSettings, toggleSetting, onShowProfile
                         <X className="w-5 h-5" />
                     </button>
                 </div>
-                <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-slate-50/30 dark:bg-slate-900">
+                <div className="flex-1 overflow-y-auto no-scrollbar p-4 space-y-6 bg-slate-50/30 dark:bg-slate-900">
                     <div>
                         <div className="px-2 mb-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Account & Privacy</div>
                         <div className="bg-white dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700 rounded-2xl overflow-hidden shadow-sm">
