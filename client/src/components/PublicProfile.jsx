@@ -1,6 +1,6 @@
 import { Calendar, Mail, MapPin, MessageSquare, Phone, X } from "lucide-react";
 
-const PublicProfile = ({ profile, onClose, onViewAvatar, onStartChat, onStartCall }) => {
+const PublicProfile = ({ profile, onClose, onViewAvatar, onStartChat }) => {
     if (!profile) return null;
     return (
         <div className="fixed inset-0 bg-slate-900/40 dark:bg-slate-900/80 backdrop-blur-sm z-70 flex items-center justify-center p-4 transition-all">
@@ -65,11 +65,6 @@ const PublicProfile = ({ profile, onClose, onViewAvatar, onStartChat, onStartCal
                                     onClick={onStartChat}
                                     className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center justify-center gap-2">
                                     <MessageSquare className="w-4 h-4" /> Message
-                                </button>
-                                <button
-                                    onClick={() => onStartCall("audio")}
-                                    className="p-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl transition-colors">
-                                    <Phone className="w-5 h-5" />
                                 </button>
                             </div>
                         </div>

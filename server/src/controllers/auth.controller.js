@@ -41,7 +41,9 @@ export const loginUser = async (req, res) => {
         return res.status(401).json({ message: "Invalid email or password" });
     }
     const accessToken = await authenticateUser(req, res, user);
-    return res.status(200).json({ message: "Logged in successfully", user: req.user, accessToken })
+    req.user = user;
+    console.log("Login controller req.user : ", req.user);
+    return res.status(200).json({ message: "Logged in successfully", user, accessToken })
 }
 
 export const logout = async (req, res) => {
@@ -117,7 +119,7 @@ export const authenticateUser = async (req, res, user) => {
 
     res.cookie('refresh_token', refreshToken, {
         ...baseConfig,
-        maxAge: 10 * 24 * 60 * 60 * 1000
+        maxAge: 7 * 24 * 60 * 60 * 1000
     })
 
     return accessToken;

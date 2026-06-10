@@ -30,6 +30,8 @@ function VerifyEmail() {
 
     const handleVerify = () => {
         navigate("/");
+
+        
     };
 
     return (

@@ -1,3 +1,4 @@
+import ConversationModel from "../models/conversation.model.js";
 import UserModel from "../models/user.model.js";
 import { hashPassword, verifyPassword } from "../services/auth.services.js";
 import { getUserByEmail, getUserById } from "../services/user.services.js";
@@ -48,22 +49,14 @@ export const changeName = async (req, res) => {
     }
 }
 
-export const getChattedUser = async (req, res) => {
-    const { userIds } = req.body;
-
+export const getConversations = async (req, res) => {
+    const { _id } = req.user;
     try {
-        const users = await Promise.all(
-            userIds?.map(async (userId) => {
-                const user = await getUserById(userId);
-                return {
-                    id: user._id,
-                    name: `${user.firstName} ${user.lastName}`,
-                    email: user.email,
-                };
-            })
-        );
-
-        res.status(200).json({ chattedWith: users });
+        const conversations = await ConversationModel.find({ members: { $in: [_id] } })
+            .populate("members", "name email avatar status lastseen")
+            .sort({ updatedAt: -1 });
+        console.log("Conversations : ", conversations);
+        res.status(200).json({ conversations });
     } catch (error) {
         console.error(error.message);
         res.status(500).json({ message: 'Internal server error' });
@@ -71,22 +64,40 @@ export const getChattedUser = async (req, res) => {
 }
 
 export const searchUser = async (req, res) => {
-    const { email } = req.body
-    const user = await getUserByEmail(email)
-    if (user) return res.status(200).json({ message: "user found", user })
-    return res.status(400).json({ message: 'user not found' })
+    const { query } = req.query;
+    console.log("Query : ", query);
+
+    const isEmail = query.includes("@");
+    console.log("Is Email : ", isEmail);
+    try {
+        const user = isEmail
+            ? [await getUserByEmail(query)]
+            : await UserModel.find({
+                $or: [
+                    { name: { $regex: query, $options: "i" } },
+                    { email: { $regex: query, $options: "i" } }
+                ]
+            }).select("-password");
+
+        console.log("User : ", user);
+        return res.status(200).json({ message: "user found", user });
+    } catch (error) {
+        return res.status(400).json({ message: 'No user found' });
+    }
 }
 
-export const addToChattedUser = async (req, res) => {
-    const { user, searchedUser, chattedUsers } = req.body;
-    console.log("ADD to chad user", user)
+export const createConversation = async (req, res) => {
+    const { id } = req.body;
+    const { _id } = req.user;
+    console.log("ADD to chad user", _id)
     try {
-        const op1 = await UserModel.updateOne({ email: user.email }, { $set: { chattingWith: chattedUsers } })
-        const x = searchedUser?.chattingWith
-        x.push(user._id)
-        const op2 = await UserModel.updateOne({ email: searchedUser.email }, { $set: { chattingWith: x } })
-        console.log(op1)
-        console.log(op2)
+
+        const conversation = ConversationModel.create({
+            members: [_id, id],
+            isGroup: false,
+            // lastMessage: "",
+        });
+
         return res.status(200).json({ message: 'chat added successfully' })
     } catch (error) {
         console.log(error)

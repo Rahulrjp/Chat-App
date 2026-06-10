@@ -107,7 +107,6 @@ export const INITIAL_MESSAGES = {
     1: [
         { id: 101, sender: "them", text: "Hey Alex! How is the new project coming along?", time: "10:30 AM" },
         { id: 102, sender: "me", text: "It's going great! Just finishing up the UI right now.", time: "10:35 AM", reactions: ["❤️", "🔥"] },
-        { id: 103, sender: "me", type: "call", callType: "audio", duration: 345, time: "10:40 AM" },
         {
             id: 104,
             sender: "them",
@@ -123,11 +122,6 @@ export const INITIAL_MESSAGES = {
     ],
     4: [
         { id: 401, sender: "them", text: "Can you send me the report?", time: "Tuesday" },
-        { id: 402, sender: "them", type: "call", callType: "video", duration: 0, time: "Wednesday" },
     ],
 };
 
-export const INITIAL_CALLS = [
-    { id: 1001, contact: INITIAL_CONTACTS[0], type: "audio", direction: "outgoing", duration: 345, time: "10:40 AM", status: "completed" },
-    { id: 1002, contact: INITIAL_CONTACTS[3], type: "video", direction: "incoming", duration: 0, time: "Wednesday", status: "missed" },
-];

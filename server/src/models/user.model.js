@@ -18,8 +18,8 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     avatar: {
-        url: { type: String },
-        publicId: { type: String }, //Cloudinary public id for image management
+        url: { type: String, default: "" },
+        publicId: { type: String, default: "" }, //Cloudinary public id for image management
     },
     status: {
         type: String,

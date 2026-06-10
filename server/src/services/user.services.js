@@ -1,7 +1,7 @@
 import UserModel from "../models/user.model.js";
 
 export const getUserByEmail = async (email) => {
-    const userExist = await UserModel.findOne({ email: email })
+    const userExist = await UserModel.findOne({ email: email });
     return userExist;
 }
 

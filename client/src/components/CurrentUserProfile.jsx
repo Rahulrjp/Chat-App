@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 
 const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCropImageSrc, onViewAvatar }) => {
     const [isEditingAbout, setIsEditingAbout] = useState(false);
-    const [aboutInput, setAboutInput] = useState(currentUser.about);
+    const [aboutInput, setAboutInput] = useState(currentUser?.about);
     const fileInputRef = useRef(null);
 
     if (!show) return null;
@@ -29,12 +29,12 @@ const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCrop
                     </button>
                 </div>
                 <div className="flex-1 overflow-y-auto pb-6">
-                    <div className="relative -mt-16 flex justify-center">
+                    <div className="relative mt-16 flex justify-center">
                         <div className="relative cursor-pointer group">
                             <img
-                                src={currentUser.avatar}
-                                alt={currentUser.name}
-                                onClick={() => onViewAvatar(currentUser.avatar)}
+                                src={currentUser?.avatar}
+                                alt={currentUser?.name}
+                                onClick={() => onViewAvatar(currentUser?.avatar)}
                                 className="w-32 h-32 rounded-full border-4 border-white dark:border-slate-900 object-cover bg-white dark:bg-slate-800 shadow-md group-hover:opacity-90 transition-opacity"
                             />
                             <button
@@ -49,10 +49,10 @@ const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCrop
                         </div>
                     </div>
                     <div className="px-6 pt-4 text-center">
-                        <h2 className="text-2xl font-bold">{currentUser.name}</h2>
+                        <h2 className="text-2xl font-bold">{currentUser?.name}</h2>
                         <p className="text-green-500 font-medium text-sm mt-1 mb-6 flex items-center justify-center gap-1.5">
                             <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                            {currentUser.status}
+                            {currentUser?.status}
                         </p>
                         <div className="space-y-4 text-left">
                             <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700/50">
@@ -79,7 +79,7 @@ const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCrop
                                             <button
                                                 onClick={() => {
                                                     setIsEditingAbout(false);
-                                                    setAboutInput(currentUser.about);
+                                                    setAboutInput(currentUser?.about);
                                                 }}
                                                 className="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
                                                 Cancel
@@ -95,7 +95,7 @@ const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCrop
                                         </div>
                                     </div>
                                 ) : (
-                                    <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">{currentUser.about}</p>
+                                    <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">{currentUser?.about}</p>
                                 )}
                             </div>
                             <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700/50 space-y-4">
@@ -103,26 +103,26 @@ const CurrentUserProfile = ({ show, onClose, currentUser, onSaveAbout, onSetCrop
                                     <label className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
                                         <Mail className="w-3.5 h-3.5" /> Email Address
                                     </label>
-                                    <p className="text-sm text-slate-700 dark:text-slate-300">{currentUser.email}</p>
+                                    <p className="text-sm text-slate-700 dark:text-slate-300">{currentUser?.email}</p>
                                 </div>
                                 <div className="pt-3 border-t border-slate-200 dark:border-slate-700">
                                     <label className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
                                         <Phone className="w-3.5 h-3.5" /> Phone Number
                                     </label>
-                                    <p className="text-sm text-slate-700 dark:text-slate-300">{currentUser.phone}</p>
+                                    <p className="text-sm text-slate-700 dark:text-slate-300">{currentUser?.phoneNumber}</p>
                                 </div>
                                 <div className="pt-3 border-t border-slate-200 dark:border-slate-700 flex gap-6">
                                     <div className="flex-1">
                                         <label className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
                                             <MapPin className="w-3.5 h-3.5" /> Location
                                         </label>
-                                        <p className="text-sm text-slate-700 dark:text-slate-300">{currentUser.location}</p>
+                                        <p className="text-sm text-slate-700 dark:text-slate-300">{currentUser?.location}</p>
                                     </div>
                                     <div className="flex-1">
                                         <label className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
                                             <Calendar className="w-3.5 h-3.5" /> Joined
                                         </label>
-                                        <p className="text-sm text-slate-700 dark:text-slate-300">{currentUser.joined}</p>
+                                        <p className="text-sm text-slate-700 dark:text-slate-300">{new Date(currentUser?.createdAt).toDateString()}</p>
                                     </div>
                                 </div>
                             </div>

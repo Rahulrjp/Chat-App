@@ -16,10 +16,15 @@ const conversationSchema = new mongoose.Schema({
         ref: "User"
     },
     lastMessage: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Chat"
-    }
-})
+        chatId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Chat"
+        },
+        message: {
+            type: String,
+        }
+    },
+}, { timestamps: true });
 
 const ConversationModel = mongoose.model("Conversation", conversationSchema);
 

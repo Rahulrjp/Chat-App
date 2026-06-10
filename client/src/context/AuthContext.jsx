@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     const getUser = async () => {
         try {
             const userData = await getCurrentUser();
-            setUser(userData);
+            setUser(userData.user);
         } catch (error) {
             console.error("Error fetching user data:", error);
         } finally {
